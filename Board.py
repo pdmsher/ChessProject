@@ -195,23 +195,26 @@ class Board:
                 self.boardAr[int(temp)] = 0
                 self.boardAr[position] = goalP
             else:
-                pass 
+                if row != 0 :
+                    pass
+                elif col != 0:
+                    pass
                 #this is where we will figure out if there is 2 knights that can attack that position which one it is
             
                             
-game = Board()
-game.movePiece(game.boardAr[61], 52)
-print(game.toString())
-game.movePiece(game.boardAr[61], 54)
-print(game.toString())
-game.movePiece(game.boardAr[48], 36)
-print(game.toString())
-game.movePiece(game.boardAr[61], 52)
-print(game.toString())
-game.movePiece(game.boardAr[52], 65)
-print(game.toString())
-
-game.movePiece(game.boardAr[57], 42)
-print(game.toString())
-game.movePiece(game.boardAr[42], 57)
-print(game.toString())
+#game = Board()
+#game.movePiece(game.boardAr[61], 52)
+#print(game.toString())
+#game.movePiece(game.boardAr[61], 54)
+#print(game.toString())
+#game.movePiece(game.boardAr[48], 36)
+#print(game.toString())
+#game.movePiece(game.boardAr[61], 52)
+#print(game.toString())
+#game.movePiece(game.boardAr[52], 65)
+#print(game.toString())
+#
+#game.movePiece(game.boardAr[57], 42)
+#print(game.toString())
+#game.movePiece(game.boardAr[42], 57)
+#print(game.toString())
