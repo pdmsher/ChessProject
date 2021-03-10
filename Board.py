@@ -94,31 +94,36 @@ class Board:
                     retString+='/'
         return retString
     
-    def movePiece(self, piece, position):
-        if piece > 16:
-            color = 16
-        elif piece != 0:
-            color = 8
-        else:
-            color = 0
+    def getTurn(self):
+        if self.turn % 2 == 0:
+            return Piece.White
+        return Piece.Black
+    def changeTurn(self):
+        self.turn += 1
+        
+        
+    def movePiece(self, piece, color, position, row, col):
+        print(str(color) + "2")
         if Piece.Pawn | color ==  piece:
-            self.movePawn(position, color)
+            return self.movePawn(position, color, col)
         elif Piece.Bishop | color == piece:
-            self.moveBishop(position, color)
+            return self.moveBishop(position, color)
         elif Piece.Knight | color == piece:
-            self.moveKnight(position, color, 0, 0)
-        self.turn += self.turn
+            return self.moveKnight(position, color, row, col)
+        
             
-    def movePawn(self, position, color):
+    def movePawn(self, position, color, col):
         if color == 16:
             goalP = (Piece.Pawn | Piece.Black);
             if self.boardAr[position] == 0:
                 if self.boardAr[position - 8] == goalP:
                     self.boardAr[position - 8] = 0;
                     self.boardAr[position] = goalP;
+                    return True
                 elif self.boardAr[position - 16] == goalP and (position >= 24 and position <= 21):
                     self.boardAr[position - 16] = 0;
                     self.boardAr[position] = goalP;
+                    return True
             
         elif color == 8:
             goalP = (Piece.Pawn | Piece.White);
@@ -127,17 +132,21 @@ class Board:
                 if self.boardAr[position + 8] == goalP:
                     self.boardAr[position + 8] = 0;
                     self.boardAr[position] = goalP;
+                    return True
                 elif self.boardAr[position + 16] == goalP and (position >= 32 and position <= 39):
                     self.boardAr[position + 16] = 0;
                     self.boardAr[position] = goalP;
+                    return True
             elif self.boardAr[position] > 16: 
                 if self.boardAr[position + 7] == goalP:
                     self.boardAr[position] = goalP;
                     self.boardAr[position + 7] = 0;
+                    return True
                 elif self.boardAr[position + 9] == goalP:
                     self.boardAr[position] = goalP;
                     self.boardAr[position + 9] = 0;
-                    
+                    return True
+        return False          
         #En Passent here
     
     def moveBishop(self, position, color):
@@ -164,8 +173,9 @@ class Board:
                         elif (self.boardAr[holder + x] == goalP):
                             self.boardAr[holder + x] = 0
                             self.boardAr[position] = goalP
-                            done = 1
+                            return True
                 holder = position
+        return False
                      
     def moveKnight(self, position, color, row, col):
         if position < 0 or position > 63:
@@ -194,6 +204,7 @@ class Board:
                 
                 self.boardAr[int(temp)] = 0
                 self.boardAr[position] = goalP
+                return True
             else:
                 if row != 0 :
                     pass
@@ -201,7 +212,8 @@ class Board:
                     pass
                 #this is where we will figure out if there is 2 knights that can attack that position which one it is
             
-                            
+        return False
+                
 #game = Board()
 #game.movePiece(game.boardAr[61], 52)
 #print(game.toString())

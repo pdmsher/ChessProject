@@ -35,11 +35,13 @@ def main():
         for e in p.event.get():
             if e.type == p.QUIT:
                 done = True
+        drawGame(screen, board)
         clock.tick(MAX_FPS)
         p.display.flip()
-        
-        drawGame(screen, board)
-        
+        val = input("Enter Command: ")
+        if val == "exit":
+            break
+        breakString(val, board.getTurn(), board)
 
 def drawGame(screen, board):
     drawBack(screen)
@@ -85,11 +87,13 @@ def drawPieces(screen, board):
                     screen.blit(IMAGES["P1"], p.Rect(c*SQ_SIZE, r*SQ_SIZE, SQ_SIZE, SQ_SIZE))
                 
                 
-def breakString(move, color):
+def breakString(move, color, board):
     start = move[0]
     piece = 0
     check = 0
     mate = 0
+    row = 0
+    col = 0
     if len(move) < 2: #error handling, Very bad error handling
         print("invalid move")
         return 0
@@ -142,8 +146,11 @@ def breakString(move, color):
 
     #instead of returning we may just call our move function from here, which 
     #means i may need to change names because breakString and move
-    #don't make sense for what they may do     
-    return piece 
+    #don't make sense for what they may do  
+    print(color)    
+    v = board.movePiece(piece, color, pos, row, col)
+    if v == True:
+        board.changeTurn()
 
 
 def translate(posInStr):
@@ -152,6 +159,6 @@ def translate(posInStr):
     return pos
 
 
-print(breakString("e5", 16))
+#print(breakString("e5", 16))
 #print(breakString("asdfgsdfghR5", 16))
-#main()
+main()
